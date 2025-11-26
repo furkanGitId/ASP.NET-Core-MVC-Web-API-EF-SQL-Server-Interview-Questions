@@ -188,6 +188,186 @@ public class ProductsController : ControllerBase
 
 ---
 
+## ⭐ 16. SELECT 1 vs SELECT \* vs SELECT column
+
+-   SELECT 1: Sabse fast. Sirf existence check hota hai.
+-   SELECT \*: Saare columns fetch karta hai, IO heavy.
+-   SELECT column: Covering index ke saath fast, sirf required data.
+
+---
+
+## ⭐ 17. UNION vs UNION ALL
+
+-   UNION: Duplicates remove karta hai, slow.
+-   UNION ALL: Duplicates ko rehne deta hai, fast.
+
+---
+
+## ⭐ 18. EXISTS vs IN vs JOIN
+
+-   EXISTS: Pehla match milte hi ruk jata hai, large outer table ke liye
+    best.
+-   IN: List-based check karta hai, NULL ka dhyaan.
+-   JOIN: One-to-many ho to duplicates aa sakte hain.
+
+---
+
+## ⭐ 19. Window Functions
+
+``` sql
+SELECT ROW_NUMBER() OVER (PARTITION BY DeptId ORDER BY Salary DESC) AS rn
+FROM Employee;
+```
+
+---
+
+## ⭐ 20. CTE vs Temp Table vs Table Variable
+
+  Feature    CTE                 Temp Table (#)   Table Variable (@)
+  ---------- ------------------- ---------------- --------------------
+  Scope      Single statement    Session          Batch
+  Index      No                  Yes              Sirf PK
+  Stats      No                  Yes              No
+  Best Use   Clean & recursive   Large data       Small data / TVP
+
+---
+
+## ⭐ 21. Deadlock -- Kya hai & Fix kaise karein
+
+-   Do queries ek dusre ka lock wait karte rehte hain → deadlock.
+-   Debug: trace flag 1222, system_health.
+-   Fix: Same order mein locks lo, transactions short rakho, indexes
+    tune karo.
+
+---
+
+## ⭐ 22. Covering Index
+
+``` sql
+CREATE INDEX IX_Emp_Name_Cover ON Employee(Name) INCLUDE (Salary, DeptId);
+```
+
+---
+
+## ⭐ 23. Parameter Sniffing
+
+-   SQL pehla parameter dekhkar plan cache karta hai.
+-   Fix: RECOMPILE, OPTIMIZE FOR, local variables, proc split.
+
+---
+
+## ⭐ 24. Pagination
+
+``` sql
+ORDER BY EmpId OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY;
+```
+
+---
+
+## ⭐ 25. TVP -- Bulk Insert from .NET
+
+``` sql
+CREATE TYPE dbo.EmpTableType AS TABLE (Id INT, Name NVARCHAR(50));
+```
+
+``` csharp
+var table = new DataTable();
+table.Columns.Add("Id", typeof(int));
+table.Columns.Add("Name", typeof(string));
+table.Rows.Add(1, "Raj");
+```
+
+---
+
+## Pro Tip
+
+Agar interview mein koi issue-based question aaye, jaise “site slow ho gayi,” to sabse pehle:
+
+Execution Plan
+
+Missing Indexes
+
+Parameter Sniffing
+
+In teenon se zyada tar real-world issues solve ho jaate hain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## ⭐ 19. Window Functions (ROW_NUMBER, RANK, DENSE_RANK)
+```sql
+Copy
+SELECT ROW_NUMBER() OVER (PARTITION BY DeptId ORDER BY Salary DESC) AS rn
+FROM Employee;
+```
+
+ROW_NUMBER – unique sequence.
+RANK – same value = same rank, next rank skip.
+DENSE_RANK – skip nahi karta.
+
+---
+
+## ⭐ 20. CTE vs Temp Table vs Table Variable
+Table
+Copy
+Feature	CTE	Temp Table (#)	Table Variable (@)
+Scope	Single statement	Session	Batch
+Index	Cannot add	Can add	Only PK
+Stats	No	Yes	No
+Best	Recursive, readable	Large data	Small data, TVP
+🔍 21. Deadlock – What & Fix?
+Cycle: A→B, B→A locks.
+Trace: 1222 flag ya system_health extended events.
+Fix: same order se locks lo, nolock where safe, short tx, index tune.
+🔍 22. Covering Index – Kya Hai?
+Index mein all columns present ho jo query chahti hai → Key/RID lookup nahi hota.
+sql
+Copy
+CREATE INDEX IX_Emp_Name_Cover ON Employee(Name) INCLUDE (Salary, DeptId);
+🔍 23. Parameter Sniffing Problem & Fix
+First time jo parameter aaya uska plan reuse → wrong plan dusre params ke liye.
+Fix: OPTION (RECOMPILE), OPTIMIZE FOR, local variables, split proc.
+🔍 24. Pagination – OFFSET/FETCH vs ROW_NUMBER
+sql
+Copy
+-- SQL 2012+
+ORDER BY EmpId OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY;
+OFFSET/FETCH – simpler, index needed on ORDER BY.
+ROW_NUMBER – older, CTE mein, thoda verbose.
+🔍 25. TVP (Table-Valued Parameter) – Bulk Insert .NET Se
+SQL:
+sql
+Copy
+CREATE TYPE dbo.EmpTableType AS TABLE (Id INT, Name NVARCHAR(50));
+CREATE PROC dbo.BulkInsertEmp @tvp EmpTableType READONLY AS
+INSERT INTO Employee SELECT * FROM @tvp;
+C#:
+csharp
+Copy
+var table = new DataTable();
+table.Columns.Add("Id", typeof(int));
+table.Rows.Add(1, "Raj");
+var param = cmd.Parameters.AddWithValue("@tvp", table);
+param.SqlDbType = SqlDbType.Structured;
+param.TypeName = "dbo.EmpTableType";
+Single round-trip → network & time bachao.
+Pro Tip: In interview, agar koi scenario-based sawaal aaye (e.g. “site slow ho gaya”) to pehle Execution Plan dekho, missing indexes & parameter-sniffing batana – 80% chances interviewer impress.
+
 ## 🎯 Quick Tips for Interview Prep
 - Har answer loud revise karo
 - Code run karke dekh lo
