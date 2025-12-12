@@ -279,6 +279,22 @@ table.Rows.Add(1, "Raj");
 
 ---
 
+# ⭐ 26. CHAR vs VARCHAR vs NVARCHAR
+
+## 1. CHAR
+- Fixed-length data type  
+- If you store only 3 characters in `CHAR(10)`, SQL Server still reserves space for 10 characters (pads extra spaces).
+
+```sql
+CREATE TABLE SampleChar (
+    Code CHAR(10)
+);
+
+INSERT INTO SampleChar VALUES ('Sam');
+-- Stored: 'Sam       '
+
+---
+
 ## Pro Tip
 
 Agar interview mein koi issue-based question aaye, jaise “site slow ho gayi,” to sabse pehle:
