@@ -342,6 +342,74 @@ INSERT INTO SampleNvarchar VALUES (N'नमस्ते दुनिया');
 
 ---
 
+# ⭐ 27. Static ke Questions
+
+**Q1. static keyword kya karta hai?**\
+Ans: Ye value ko class level par store karta hai. Object banane ki
+zaroorat nahi hoti.
+
+**Q2. static constructor kya hota hai?**\
+Ans: Ye class load hote hi ek baar run hota hai. Parameters nahi leta.
+
+**Q3. static aur instance members me difference?**\
+Ans: static class ka hota hai, instance object ka.
+
+---
+
+# ⭐ 28. Readonly ke Questions
+
+**Q1. readonly field kab set ho sakti hai?**\
+Ans: Declaration par ya constructor ke andar.
+
+**Q2. readonly aur const me kya difference hai?**\
+Ans: const compile time fixed hota hai. readonly runtime me bhi set ho
+sakta hai (constructor ke through).
+
+---
+
+# ⭐ 29. Interface ke Questions
+
+**Q1. Interface kya hota hai?**\
+Ans: Ek rulebook jisme sirf method names hote hain.
+
+**Q2. Kya interface me constructor ho sakta hai?**\
+Ans: Nahi.
+
+**Q3. Kya class multiple interfaces implement kar sakti hai?**\
+Ans: Haan.
+
+**Q4. Interface ka real use kya hai?**\
+Ans: Loose coupling aur common rules set karna.
+
+---
+
+# ⭐ 29. Abstract Class ke Questions
+
+**Q1. Abstract class kya hoti hai?**\
+Ans: Ek base class jisme complete + incomplete methods dono ho sakte
+hain.
+
+**Q2. Kya abstract class ka object ban sakta hai?**\
+Ans: Nahi.
+
+**Q3. Abstract aur non-abstract methods me difference?**\
+Ans: Abstract me body nahi hoti. Non-abstract me hoti hai.
+
+---
+
+# ⭐ 30. Abstract vs Interface ke Top Questions
+
+**Q1. Abstract class aur interface me main difference?**\
+Ans: Abstract code de sakti hai. Interface sirf rules deta hai.
+
+**Q2. Kab abstract class use karte hain?**\
+Ans: Jab kuch common logic share karna ho.
+
+**Q3. Kab interface use karte hain?**\
+Ans: Jab sirf rule dena ho aur multiple inheritance chahiye ho.
+
+---
+
 ## Pro Tip
 
 Agar interview mein koi issue-based question aaye, jaise “site slow ho gayi,” to sabse pehle:
