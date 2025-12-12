@@ -279,6 +279,87 @@ table.Rows.Add(1, "Raj");
 
 ---
 
+# ⭐ 26. CHAR vs VARCHAR vs NVARCHAR
+
+## 1. CHAR
+
+Fixed-length data type.\
+Agar `CHAR(10)` mein sirf 3 letters store kiye, toh 10 characters ka
+space reserve karega (padding ke saath).
+
+``` sql
+CREATE TABLE SampleChar (
+    Code CHAR(10)
+);
+
+INSERT INTO SampleChar VALUES ('Sam');
+-- Stored: 'Sam       '
+```
+
+**Kab Use Karein:**\
+- Jab length fix ho\
+- Examples: `Gender ('M', 'F')`, `Country Code ('IN', 'USA')`
+
+------------------------------------------------------------------------
+
+## 2. VARCHAR
+
+Variable-length data type.\
+Sirf actual data jitna space leta hai.
+
+``` sql
+CREATE TABLE SampleVarchar (
+    Name VARCHAR(10)
+);
+
+INSERT INTO SampleVarchar VALUES ('Sam');
+-- Stored: 'Sam'
+```
+
+**Kab Use Karein:**\
+- Jab data ki length change hoti rahe\
+- Examples: Names, Emails, Address
+
+------------------------------------------------------------------------
+
+## 3. NVARCHAR
+
+VARCHAR jaisa hi lekin Unicode support karta hai.\
+Hindi, Tamil, Telugu, Chinese, Emojis sab store ho jate hain.
+
+``` sql
+CREATE TABLE SampleNvarchar (
+    Description NVARCHAR(50)
+);
+
+INSERT INTO SampleNvarchar VALUES (N'नमस्ते दुनिया');
+-- N prefix = Unicode literal
+```
+
+**Kab Use Karein:**\
+- Jab multi-language text store karna ho\
+- Examples: Hindi names, Unicode comments, Emojis
+
+------------------------------------------------------------------------
+
+## Summary Table
+
+  -----------------------------------------------------------------------------
+  Data Type      Length     Unicode      Storage         Best Use Case
+                 Type       Support                      
+  -------------- ---------- ------------ --------------- ----------------------
+  **CHAR**       Fixed      No           Always full     Codes, fixed values
+                                         size            
+
+  **VARCHAR**    Variable   No           Actual size     Names, emails,
+                                         only            addresses
+
+  **NVARCHAR**   Variable   Yes          2 bytes per     Multi-language, emojis
+                                         char            
+  -----------------------------------------------------------------------------
+
+---
+
 ## Pro Tip
 
 Agar interview mein koi issue-based question aaye, jaise “site slow ho gayi,” to sabse pehle:
