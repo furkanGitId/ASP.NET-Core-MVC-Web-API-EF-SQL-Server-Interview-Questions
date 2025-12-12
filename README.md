@@ -296,8 +296,8 @@ INSERT INTO SampleChar VALUES ('Sam');
 -- Stored: 'Sam       '
 ```
 
-**Kab Use Karein:**\
-- Jab length fix ho\
+**Kab Use Karein:**
+- Jab length fix ho
 - Examples: `Gender ('M', 'F')`, `Country Code ('IN', 'USA')`
 
 ------------------------------------------------------------------------
@@ -316,8 +316,8 @@ INSERT INTO SampleVarchar VALUES ('Sam');
 -- Stored: 'Sam'
 ```
 
-**Kab Use Karein:**\
-- Jab data ki length change hoti rahe\
+**Kab Use Karein:**
+- Jab data ki length change hoti rahe
 - Examples: Names, Emails, Address
 
 ------------------------------------------------------------------------
@@ -336,27 +336,9 @@ INSERT INTO SampleNvarchar VALUES (N'नमस्ते दुनिया');
 -- N prefix = Unicode literal
 ```
 
-**Kab Use Karein:**\
-- Jab multi-language text store karna ho\
+**Kab Use Karein:**
+- Jab multi-language text store karna ho
 - Examples: Hindi names, Unicode comments, Emojis
-
-------------------------------------------------------------------------
-
-## Summary Table
-
-  -----------------------------------------------------------------------------
-  Data Type      Length     Unicode      Storage         Best Use Case
-                 Type       Support                      
-  -------------- ---------- ------------ --------------- ----------------------
-  **CHAR**       Fixed      No           Always full     Codes, fixed values
-                                         size            
-
-  **VARCHAR**    Variable   No           Actual size     Names, emails,
-                                         only            addresses
-
-  **NVARCHAR**   Variable   Yes          2 bytes per     Multi-language, emojis
-                                         char            
-  -----------------------------------------------------------------------------
 
 ---
 
