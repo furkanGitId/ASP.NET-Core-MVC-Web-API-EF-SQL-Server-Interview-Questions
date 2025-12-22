@@ -410,6 +410,101 @@ Ans: Jab sirf rule dena ho aur multiple inheritance chahiye ho.
 
 ---
 
+# ⭐ 31. const vs readonly ke Questions
+
+**Q1. const kya hota hai?**  
+Ans: `const` ek aisa variable hota hai jiska value compile time pe fix hota hai aur kabhi change nahi hota.
+
+**Q2. readonly kya hota hai?**  
+Ans: `readonly` ka value runtime pe set ho sakta hai, mostly constructor ke andar.
+
+**Q3. const aur readonly me main difference kya hai?**  
+Ans: `const` ka value compile time pe decide hota hai, jabki `readonly` ka value runtime pe.
+
+**Q4. Kya const ka value baad me change ho sakta hai?**  
+Ans: Nahi, bilkul nahi.
+
+**Q5. Kya readonly ka value change ho sakta hai?**  
+Ans: Sirf constructor me set ho sakta hai, uske baad nahi.
+
+---
+
+# ⭐ 32. Inheritance ke Questions
+
+**Q1. Inheritance kya hota hai?**  
+Ans: Jab ek class dusri class ki properties aur methods use karti hai, use inheritance kehte hain.
+
+**Q2. Inheritance kyun use karte hain?**  
+Ans: Code reuse ke liye aur duplication kam karne ke liye.
+
+**Q3. Parent class ko kya kehte hain?**  
+Ans: Base class ya Super class.
+
+**Q4. Child class ko kya kehte hain?**  
+Ans: Derived class ya Sub class.
+
+**Q5. Inheritance ka real example kya hai?**  
+Ans: `Animal` parent class hai aur `Dog` child class, jo animal ke features use karta hai.
+
+---
+
+# ⭐ 33. Polymorphism ke Questions
+
+**Q1. Polymorphism kya hota hai?**  
+Ans: Same method ka different behavior hona hi polymorphism hai.
+
+**Q2. Polymorphism ke kitne types hote hain?**  
+Ans: Do types hote hain: Compile-time aur Runtime.
+
+**Q3. Compile-time polymorphism kya hota hai?**  
+Ans: Jab method overloading use hoti hai.
+
+**Q4. Runtime polymorphism kya hota hai?**  
+Ans: Jab method overriding hoti hai aur object runtime pe decide hota hai.
+
+**Q5. Polymorphism ka real life example kya hai?**  
+Ans: Shape class ka `Draw()` method circle ke liye alag aur rectangle ke liye alag kaam karta hai.
+
+---
+
+# ⭐ 34. Normalization ke Questions
+
+**Q1. Normalization kya hota hai?**  
+Ans: Database ke data ko properly organize karna hi normalization hai.
+
+**Q2. Normalization kyun use karte hain?**  
+Ans: Duplicate data kam karne aur data consistency maintain karne ke liye.
+
+**Q3. Normalization ka main benefit kya hai?**  
+Ans: Data redundancy kam hoti hai aur update easy ho jata hai.
+
+**Q4. Normal forms kaun kaun si hoti hain?**  
+Ans: 1NF, 2NF, 3NF, BCNF.
+
+**Q5. 1NF ka simple rule kya hai?**  
+Ans: Table me duplicate ya multi-value data nahi hona chahiye.
+
+---
+
+# ⭐ 35. ACID ke Questions
+
+**Q1. ACID kya hota hai?**  
+Ans: ACID database transaction ke rules hote hain.
+
+**Q2. ACID ka full form kya hai?**  
+Ans: Atomicity, Consistency, Isolation, Durability.
+
+**Q3. Atomicity kya hoti hai?**  
+Ans: Transaction ya to poori complete hogi ya bilkul nahi hogi.
+
+**Q4. Consistency kya hoti hai?**  
+Ans: Transaction ke baad data hamesha valid state me rahe.
+
+**Q5. Durability kya hoti hai?**  
+Ans: Transaction commit hone ke baad data permanently save ho jata hai, crash me bhi safe rehta hai.
+
+---
+
 ## Pro Tip
 
 Agar interview mein koi issue-based question aaye, jaise “site slow ho gayi,” to sabse pehle:
