@@ -124,6 +124,26 @@ Any     → employees.Any(e => e.Salary > 100000)
 ---
 
 ## ⭐ 10. Clustered vs Non-Clustered Index
+**Easy language**
+Index matlab **book ka index page.**
+
+**Clustered Index**
+-   Data **physically sorted** hota hai
+-   Table me sirf **1 clustered index**
+-   Usually **Primary Key**
+
+```csharp
+CREATE CLUSTERED INDEX IX_Emp_Id ON Employee(EmpId);
+```
+
+**Non-Clustered Index**
+-   Alag structure hota hai
+-   Data ka **pointer** rakhta hai
+-   Max **999**
+
+```csharp
+CREATE NONCLUSTERED INDEX IX_Emp_Name ON Employee(Name);
+```
 
 | Feature | Clustered | Non-Clustered |
 |--------|-----------|---------------|
@@ -135,6 +155,41 @@ Any     → employees.Any(e => e.Salary > 100000)
 ---
 
 ## ⭐ 11. Stored Procedure vs Function vs View
+**Stored Procedure**
+-   Insert, Update, Delete sab
+-   Transaction support
+-   Output parameter allowed
+
+```csharp
+CREATE PROCEDURE GetEmployees
+AS
+BEGIN
+    SELECT * FROM Employee;
+END
+```
+
+**Function**
+-   Value return karta hai
+-   SELECT ke andar use hota hai
+
+```csharp
+CREATE FUNCTION GetEmpCount()
+RETURNS INT
+AS
+BEGIN
+    RETURN (SELECT COUNT(*) FROM Employee)
+END
+```
+
+**View**
+-   Saved SELECT query
+-   Logic hide karne ke kaam aata hai
+
+```csharp
+CREATE VIEW vw_Employees
+AS
+SELECT Name, Salary FROM Employee;
+```
 
 | Feature | Stored Procedure | Function | View |
 |--------|------------------|---------|------|
@@ -145,12 +200,32 @@ Any     → employees.Any(e => e.Salary > 100000)
 ---
 
 ## ⭐ 12. async-await Benefit
-Thread pool block nahi hota → Requests handle capacity badh jati hai.
+**Simple idea**
+
+Normal (sync) code me jab DB call hota hai, tab **thread wait karta rehta hai.**
+
+Async code me thread free ho jaata hai jab tak DB response nahi aata.
+
+**Real life example**
+
+Socho restaurant me waiter:
+
+-   **Sync:** waiter khana aane tak table ke paas khada rahe
+
+-   **Async:** waiter dusre tables serve kare jab tak khana ban raha ho
 
 ```csharp
 public async Task<IActionResult> Get() =>
     Ok(await context.Employees.ToListAsync());
 ```
+
+**Benefit**
+
+-   Thread pool block nahi hota
+
+-   Zyada users ko handle kar sakte ho
+
+-   Web app fast feel hoti hai
 
 ---
 
@@ -164,6 +239,8 @@ app.UseAuthorization();
 ---
 
 ## ⭐ 14. Attribute vs Conventional Routing
+**Attribute Routing (Recommended)**
+Controller ke upar route define
 
 ```csharp
 [Route("api/[controller]")]
@@ -174,6 +251,14 @@ public class ProductsController : ControllerBase
     public IActionResult Get(int id) { ... }
 }
 ```
+
+```bash
+/api/products/5
+```
+
+**Conventional Routing**
+
+```Program.cs``` me route defined hota hai (old style)
 
 ---
 
@@ -197,6 +282,26 @@ public class ProductsController : ControllerBase
 ---
 
 ## ⭐ 17. UNION vs UNION ALL
+**UNION**
+-   Duplicate remove karta hai
+-   Internally sorting karta hai
+-   Slow
+
+```sql
+SELECT Name FROM Emp1
+UNION
+SELECT Name FROM Emp2;
+```
+
+**UNION ALL**
+-   Duplicate allow
+-   Fast
+
+```sql
+SELECT Name FROM Emp1
+UNION ALL
+SELECT Name FROM Emp2;
+```
 
 -   UNION: Duplicates remove karta hai, slow.
 -   UNION ALL: Duplicates ko rehne deta hai, fast.
@@ -213,15 +318,47 @@ public class ProductsController : ControllerBase
 ---
 
 ## ⭐ 19. Window Functions
+**Problem**
+
+Har department ka highest salary wala employee chahiye
 
 ``` sql
 SELECT ROW_NUMBER() OVER (PARTITION BY DeptId ORDER BY Salary DESC) AS rn
 FROM Employee;
 ```
 
+-   ```PARTITION BY``` → group jaisa
+-   ```ORDER BY``` → ranking
+
 ---
 
 ## ⭐ 20. CTE vs Temp Table vs Table Variable
+**CTE**
+-   Temporary result set
+-   Same query ke andar
+
+```sql
+WITH EmpCTE AS (
+    SELECT * FROM Employee
+)
+SELECT * FROM EmpCTE;
+```
+
+**Temp Table**
+-   Disk pe banti hai
+-   Large data ke liye best
+
+```sql
+CREATE TABLE #TempEmp (Id INT);
+```
+
+**Table Variable**
+-   Memory based
+-   Small data
+
+```sql
+DECLARE @Emp TABLE (Id INT);
+```
 
   Feature    CTE                 Temp Table (#)   Table Variable (@)
   ---------- ------------------- ---------------- --------------------
@@ -242,10 +379,19 @@ FROM Employee;
 ---
 
 ## ⭐ 22. Covering Index
+**Problem**
+
+Query ko data + extra columns chahiye
+
+**Solution**
+
+Include columns index me hi add kar do
 
 ``` sql
 CREATE INDEX IX_Emp_Name_Cover ON Employee(Name) INCLUDE (Salary, DeptId);
 ```
+
+Result: Query ko table hit karna nahi padta.
 
 ---
 
@@ -257,25 +403,47 @@ CREATE INDEX IX_Emp_Name_Cover ON Employee(Name) INCLUDE (Salary, DeptId);
 ---
 
 ## ⭐ 24. Pagination
+**Use case**
+
+Page-wise data load karna
 
 ``` sql
-ORDER BY EmpId OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY;
+SELECT * FROM Employee
+ORDER BY EmpId
+OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY;
 ```
+
+-   OFFSET → skip
+-   FETCH → kitne chahiye
 
 ---
 
 ## ⭐ 25. TVP -- Bulk Insert from .NET
+**Problem**
 
+Loop me insert slow hota hai
+
+**SQL Type**
 ``` sql
-CREATE TYPE dbo.EmpTableType AS TABLE (Id INT, Name NVARCHAR(50));
+CREATE TYPE dbo.EmpTableType AS TABLE
+(
+    Id INT,
+    Name NVARCHAR(50)
+);
 ```
 
+**.NET side**
 ``` csharp
 var table = new DataTable();
 table.Columns.Add("Id", typeof(int));
 table.Columns.Add("Name", typeof(string));
 table.Rows.Add(1, "Raj");
 ```
+
+**Benefit**
+
+Bulk insert
+Performance best
 
 ---
 
